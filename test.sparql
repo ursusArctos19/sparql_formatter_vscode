@@ -1,0 +1,29 @@
+# Example SPARQL Query for Testing
+
+# This is a sample SPARQL query that demonstrates various formatting features
+
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX ex: <http://example.org/>
+
+SELECT DISTINCT ?person ?name ?age ?friend
+FROM <http://example.org/people>
+WHERE {
+    ?person a foaf:Person ;
+            foaf:name ?name ;
+            foaf:age ?age .
+    
+    OPTIONAL {
+        ?person foaf:knows ?friend .
+        ?friend foaf:name ?friendName .
+    }
+    
+    FILTER (?age >= 18)
+    
+    {
+        ?person ex:hasSkill ex:Programming .
+    } UNION {
+        ?person ex:hasSkill ex:DataScience .
+    }
+}
+ORDER BY ?name
+LIMIT 10
